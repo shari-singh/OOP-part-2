@@ -1,15 +1,23 @@
+require_relative 'mission_ctrl.rb'
 class Rover
-  attr_accessor :x, :y, :direction, :instr_sequence
-#--------- Gets X, Y, Direction -----------------
-  def get_pos
-    rover_pos_1= gets.chomp.split(" ")
-    @x = rover_pos_1[0].to_i
-    @y = rover_pos_1[1].to_i
-    @direction = rover_pos_1[2].upcase
+  attr_accessor :x, :y, :direction, :rover_name
+
+  def initialize(name, pos_1)
+    @pos_1 = pos_1.split(" ")
+    @rover_name = name
+    @x = pos_1[0].to_i
+    @y = pos_1[1].to_i
+    @direction = pos_1[2]
   end
+#--------- Gets X, Y, Direction ----------------
+  # def get_pos
+  #   rover_pos_1= gets.chomp.split(" ")
+  #   @x = rover_pos_1[0].to_i
+  #   @y = rover_pos_1[1].to_i
+  #   @direction = rover_pos_1[2].upcase
+  # end
 #-------- Read each command given in Sequence -----------------------
-  def read_instr
-    instr_sequence = gets.chomp.split("") #splits into array of strings
+  def read_instr (instr_sequence)
     instr_sequence.each do |instruction| #temp value to hold each individual instruction
       if instruction == "L"
         self.turn_left(instruction)
@@ -36,39 +44,39 @@ class Rover
   #----------- DETERMINE DIRECTION --------------------
 
   def turn_left(l_dir) # ------turns rover left
-    case l_dir
-    when l_dir == 'N' then#------ NORTH
+    case @direction
+    when 'N' #------ NORTH
       @direction = 'W'
 
-   when l_dir == 'W' then#--------- WEST
+   when 'W' #--------- WEST
       @direction = 'S'
 
-  when l_dir == 'S' then
+  when 'S'  #------ SOUTH
       @direction = 'E'
 
-  when l_dir == 'E' then#------- EAST
+  when 'E'  #------- EAST
       @direction = 'N'
     end
   end #---------------END of turn_left method
 
   def turn_right(r_dir) # ----------- turns rover right
-    case r_dir
-    when r_dir == 'N' then
+    case @direction
+    when 'N'
       @direction = 'E'
 
-    when r_dir == 'E' then
+    when 'E'
       @direction = 'S'
 
-    when r_dir == 'S' then
+    when 'S'
       @direction = 'W'
 
-    when nr_dir == 'W' then
+    when 'W'
       @direction = 'N'
     end
   end #------------ END of turn_right
 
   def check_position
-    "position : #{@x},#{@y} #{@direction}"
+    "#{@rover_name}'s position : #{@x},#{@y} #{@direction}"
   end
 
 end
