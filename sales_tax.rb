@@ -39,3 +39,20 @@ class Receipt
   end
 end
 
+book = Items.new("Book", 12.49, 'false', 'false')
+music_cd = Items.new("Music CD", 14.99, 'true', 'false')
+choco_bar = Items.new("Chocolate Bar", 0.85, 'false', 'false')
+import_choco_box = Items.new ("Imported Box of Chocolates", 10, 'false', 'true')
+import_perfume = Items.new("Imported Bottle of Perfume", 47.50, 'true', 'true')
+import_perfume2 = Items.new ("Imported Bottle of Perfume", 32.19, 'true', 'true')
+perfume2 = Items.new("Bottle of Perfume", 20.89, 'true', 'false')
+headache_pills = Items.new("Packet of Headache Pills", 9.75, 'false', 'false')
+import_choco_box2 = Items.new("Imported Box of Chocolates", 11.85, 'false', 'true')
+
+receipt_items1 = []
+receipt_items2 = []
+receipt_items3 = []
+
+receipt_items1 << [book, music_cd, choco_bar]
+receipt_items2 << [import_choco_box, import_perfume]
+receipt_items3 << [import_perfume2, perfume2, headache_pills, import_choco_box2]
