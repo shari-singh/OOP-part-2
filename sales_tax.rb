@@ -1,9 +1,8 @@
 class Item
-  attr_accessor :name, :quantity, :start_price, :import_tax, :sales_tax
+  attr_accessor :name, :price, :import_tax, :sales_tax
 
-  def initilize (name, quantity, start_price, imported)
+  def initilize (name, price, imported_tax, sales_tax)
     @name = name
-    @quantity = quantity.to_i
     @start_price = start_price.to_f
     @import_tax = import_tax
     @sales_tax = sales_tax
@@ -13,14 +12,17 @@ class Item
 end
 
 class Receipt
-  attr_accessor :tax_exempt, :tax_total, :receipt_total
-
-  def initilize (tax_exempt)
-    @tax_exempt = tax_exempt
+  attr_accessor :tax_total, :receipt_total
+    @item_list = []
     @tax_total = 0
-    @total = 0
-  end
+    @receipt_total = 0
 
+  def print_items
+    @item_list.each do |item|
+    "1 #{item.name} at #{(item.price + @tax_total).round.to_f/20}"
+    end
+  end
+  
   def tax_total(price, sales_tax, import_tax)
     if (sales_tax == 'true' && import_tax == 'true')  #charge both import and sales tax if both are true
       @tax_total += start_price * (0.10 + 0.05)
@@ -34,10 +36,6 @@ class Receipt
     elsif (sales_tax == 'false' && import_tax == 'false') #no tax charge
       price
     end
-
-
-(end
-
-class Imported > Item
-
+  end
 end
+
