@@ -1,23 +1,14 @@
-require_relative 'mission_ctrl.rb'
 class Rover
-  attr_accessor :x, :y, :direction, :rover_name
+  attr_accessor :x, :y, :direction, :name
 
   def initialize(name, pos_1)
-    @pos_1 = pos_1.split(" ")
-    @rover_name = name
+    name = @name
     @x = pos_1[0].to_i
     @y = pos_1[1].to_i
-    @direction = pos_1[2]
+    @direction = pos_1[2].upcase
   end
-#--------- Gets X, Y, Direction ----------------
-  # def get_pos
-  #   rover_pos_1= gets.chomp.split(" ")
-  #   @x = rover_pos_1[0].to_i
-  #   @y = rover_pos_1[1].to_i
-  #   @direction = rover_pos_1[2].upcase
-  # end
 #-------- Read each command given in Sequence -----------------------
-  def read_instr (instr_sequence)
+  def read_instr(instr_sequence)
     instr_sequence.each do |instruction| #temp value to hold each individual instruction
       if instruction == "L"
         self.turn_left(instruction)
@@ -76,7 +67,7 @@ class Rover
   end #------------ END of turn_right
 
   def check_position
-    "#{@rover_name}'s position : #{@x},#{@y} #{@direction}"
+    "#{@name}position : #{@x},#{@y} #{@direction}"
   end
 
 end
