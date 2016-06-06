@@ -12,27 +12,29 @@ class Receipt
   attr_reader :item_list, :tax_total, :receipt_total
 
   def initialize
-    @total = []
+    @total_price = []
     @item_list = []
-    @receipt_total = []
+    @receipt_total = 0
     @sum = 0
     @before_tax = []
   end
 
 
-  def item_tax(item)
-    if (sales_taxes == 'true' && import_tax == 'true')  #charge both import and sales tax if both are true
-      @total += @price * (0.10 + 0.05)
-      puts "1 #{item.name} : $ #{@total.round.to_f/20}"
-    elsif (sales_taxes == 'false' && import_tax == 'true') #charge only import tax (9)
-      @total += @price * 0.05
-      puts "1 #{item.name} : $ #{@total.round.to_f/20}"
-    elsif (sales_taxes == 'true' && import_tax == 'false') #charge only sales tax
+  def item_tax
+    @item_list.each do |item|
+    if (item[2] == 'true' && import_tax == 'true')  #charge both import and sales tax if both are true
+      # @total += @price * (0.10 + 0.05)
+      "1 #{item.name} : #{((@total + item.price)*(0.10+0.05)).round(2)}"
+    elsif (item[2] == 'false' && import_tax == 'true') #charge only import tax
+      # @total += @price * 0.05
+      "1 #{item.name} : #{((@total + item.price)*(0.05)).round(2)}"
+    elsif (item[2] == 'true' && import_tax == 'false') #charge only sales tax
       @total += @price * 0.10
-      puts "1 #{item.name} : $ #{@total.round.to_f/20}"
-    elsif (sales_taxes == 'false' && import_tax == 'false') #no tax charge
-      puts "1 #{item.name} : $ #{@total.round.to_f/20}"
+      puts "1 #{item.name} : #{((@total + item.price)*(0.10)).round(2)}"
+    elsif (item[2] == 'false' && import_tax == 'false') #no tax charge
+      puts "1 #{item.name} : #{@total.round(2)}"
     end
+  end
   end
 
   def add(item)
@@ -44,15 +46,15 @@ class Receipt
     @before_tax.each do |x|
       @sum += x
     end
-
-    @total_price.each do |x|
+    
+      @total_price.each do |y|
       @receipt_total += x
     end
   end
 
   def totals
-    puts "Sales taxes:#{@sum.round.to_f/20}"
-    puts "Total included taxes: $#{@receipt_total.round.to_f/20}"
+    puts "Sales taxes:#{@sum.round(2)}"
+    puts "Total included taxes: #{@receipt_total.round(2)}"
   end
 end
 
@@ -75,9 +77,10 @@ receipt_items2 << [import_choco_box, import_perfume]
 receipt_items3 << [import_perfume2, perfume2, headache_pills, import_choco_box2]
 
 receipt1 = Receipt.new
-receipt1.item_tax(receipt_items1)
+receipt1.item_tax
 receipt1.sum_price
 receipt1.totals
+# receipt1.print_items
 
 receipt2 = Receipt.new
 receipt3 = Receipt.new
